@@ -38,13 +38,13 @@ class TellephantProvider {
 
     function POST($payload) {
         try {
-            $response = $this->client->request($this->METHOD, [
+            $response = $this->client->request($this->METHOD, $this->URL, [
                 'body' => $payload,
             ]);
         } catch (RequestException $ex) {
             throw new TellephantException($ex->getResponse()->getBody()->getContents(), $ex->getResponse()->getStatusCode());
         }
-        if ($response->getStatusCode() != 201) {
+        if ($response->getStatusCode() != 202) {
             throw new TellephantException($response->getBody()->getContents(), $response->getStatusCode());
         }
         return json_decode($response->getBody()->getContents());
